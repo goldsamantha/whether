@@ -12,14 +12,17 @@ def hello():
 
     cast = forecast(key, lat, lon)
 
+    d = {}
     rain = False
     #TODO: do some proper error checking eventually 0.o
     if (len(cast.hourly) < 12):
-        return json.dumps(False)
+        d['rain'] = False
+        return json.dumps(d)
 
     for i in range(12):
         data = cast.hourly[i]
         if data.precipProbability > 0.4:
             rain = True
 
-    return json.dumps(rain)
+    d['rain'] = rain
+    return json.dumps(d)
